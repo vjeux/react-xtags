@@ -16,24 +16,8 @@ var XReact = React.createClass({
     );
   },
 
-  convertDOMToReact: function(dom) {
-    // If it's a text node, we just return it as string
-    if (dom.nodeType === 3) {
-      return dom.textContent;
-    }
-
-    // Otherwise we find the React component associated to the DOM node. It can
-    // either be in React.DOM for standard HTML components or in xreact.tags for
-    // React elements we created
-    var tag = dom.tagName.toLowerCase();
-    return (React.DOM[tag] || xreact.tags[tag])(
-      convertAttributes(dom),
-      getChildren(dom).map(this.convertDOMToReact.bind(this))
-    );
-  },
-
   render: function() {
-    return this.convertDOMToReact(this.props.element);
+    return convertDOMToReact(this.props.element);
   }
 });
 
@@ -57,6 +41,22 @@ global.xreact = {
     });  
   }
 };
+
+function convertDOMToReact(dom) {
+  // If it's a text node, we just return it as string
+  if (dom.nodeType === 3) {
+    return dom.textContent;
+  }
+
+  // Otherwise we find the React component associated to the DOM node. It can
+  // either be in React.DOM for standard HTML components or in xreact.tags for
+  // React elements we created
+  var tag = dom.tagName.toLowerCase();
+  return (React.DOM[tag] || xreact.tags[tag])(
+    convertAttributes(dom),
+    getChildren(dom).map(convertDOMToReact)
+  );
+}
 
 // Helper to get an array of all the children (including text) of a dom node
 function getChildren(dom) {
