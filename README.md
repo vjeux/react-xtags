@@ -1,7 +1,8 @@
 react-xtags
 ===========
 
-Using [x-tags](http://www.x-tags.org/) from Mozilla, we can write custom tags within the DOM and have them being rendered in React.
+Using [x-tags](http://www.x-tags.org/) from Mozilla, we can write custom tags within the DOM and have them being rendered in [React](http://facebook.github.io/react/).
+
 Read [this blog article for more information](http://blog.vjeux.com/2013/javascript/custom-components-react-x-tags.html).
 
 
